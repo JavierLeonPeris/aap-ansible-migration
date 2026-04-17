@@ -260,7 +260,7 @@ By default, Ansible collections are installed from Ansible Galaxy, available at 
 
 There are several Ansible collections which are also Red Hat certified, such as `amazon.aws` and `ansible.posix`, or Red Hat Validated, such as `cloud.azure_ops` and `cloud.vmware_ops`. These are all stored in Red Hat's Ansible Automation Hub repositories, available at https://console.redhat.com/ansible/automation-hub.
 
-Several Ansible collections, such as `amazon.aws` and `vmware.vmware` exist in both Ansible Automation Hub as a Red Hat certified collection, and in Ansible Galaxy as a community maintained Ansible collection. It is recommended that Ansible developers use the Red Hat Certified and Validated Ansible collections where they are available, instead of the community maintained versions.
+Additionally, several Ansible collections, such as `amazon.aws` and `vmware.vmware` exist in both Ansible Automation Hub as a Red Hat certified collection, and in Ansible Galaxy as a community maintained Ansible collection. It is recommended that Ansible developers use the Red Hat Certified and Validated Ansible collections where they are available, instead of the community maintained versions.
 
 To set up the connection to Red Hat Ansible Automation Hub and also Ansible Galaxy, follow the below steps. You can then continue installing Ansible collections as before.
 

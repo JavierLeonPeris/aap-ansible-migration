@@ -1,0 +1,66 @@
+---
+# Modern Ansible Playbook Example (Ansible 2.10+)
+# This playbook uses Fully Qualified Collection Names (FQCN)
+
+- name: Modern Ansible Style Playbook
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+
+    - name: Send email notification
+      community.general.mail:
+        host: smtp.example.com
+        port: 587
+        username: user@example.com
+        password: "{{ email_password }}"
+        to: admin@example.com
+        subject: Ansible Report
+        body: System deployed successfully
+      delegate_to: localhost
+
+    - name: Install Docker container
+      community.docker.docker_container:
+        name: nginx
+        image: nginx:latest
+        state: started
+        ports:
+          - "80:80"
+
+    - name: Manage MySQL database
+      community.mysql.mysql_db:
+        name: myapp
+        state: present
+        login_user: root
+        login_password: "{{ mysql_password }}"
+
+    - name: Create MySQL user
+      community.mysql.mysql_user:
+        name: appuser
+        password: "{{ app_password }}"
+        priv: 'myapp.*:ALL'
+        state: present
+        login_user: root
+        login_password: "{{ mysql_password }}"
+
+    - name: Copy files to remote host
+      ansible.posix.synchronize:
+        src: /local/path/
+        dest: /remote/path/
+        recursive: yes
+
+    - name: Configure network interface (IOS)
+      cisco.ios.ios_config:
+        lines:
+          - description Configured by Ansible
+          - ip address 192.168.1.1 255.255.255.0
+        parents: interface GigabitEthernet0/1
+
+    - name: Manage APT repository
+      ansible.builtin.apt_repository:
+        repo: ppa:nginx/stable
+        state: present
+
+    - name: Gather AWS EC2 info
+      amazon.aws.ec2_instance_info:
+        region: us-east-1
+      register: ec2_info

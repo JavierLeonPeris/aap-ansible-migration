@@ -1,0 +1,52 @@
+---
+# Ansible Collections Requirements File
+# Install with: ansible-galaxy collection install -r requirements.yml
+
+collections:
+  # Community General Collection
+  # Contains many utility modules like mail, docker, package managers, etc.
+  - name: community.general
+    version: ">=8.0.0"
+
+  # Docker Collection
+  # Provides modules for managing Docker containers, images, and networks
+  - name: community.docker
+    version: ">=3.4.0"
+
+  # MySQL Collection
+  # Database management modules for MySQL/MariaDB
+  - name: community.mysql
+    version: ">=3.5.0"
+
+  # POSIX Collection
+  # System utilities like synchronize, mount, at, etc.
+  - name: ansible.posix
+    version: ">=1.5.0"
+
+  # Network Collections
+  # Cisco IOS Collection
+  - name: cisco.ios
+    version: ">=5.0.0"
+
+  # AWS Collection
+  # Amazon Web Services modules
+  - name: amazon.aws
+    version: ">=7.0.0"
+
+  # Additional useful collections:
+
+  # PostgreSQL Collection
+  - name: community.postgresql
+    version: ">=3.2.0"
+
+  # Windows Collection
+  - name: community.windows
+    version: ">=2.0.0"
+
+  # VMware Collection
+  - name: community.vmware
+    version: ">=4.0.0"
+
+  # Kubernetes Core Collection
+  - name: kubernetes.core
+    version: ">=3.0.0"

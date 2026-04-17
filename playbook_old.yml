@@ -1,0 +1,66 @@
+---
+# Ansible 2.9 Playbook Example
+# This playbook uses modules as they were in Ansible 2.9 (part of ansible-core)
+
+- name: Ansible 2.9 Style Playbook
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+
+    - name: Send email notification
+      mail:
+        host: smtp.example.com
+        port: 587
+        username: user@example.com
+        password: "{{ email_password }}"
+        to: admin@example.com
+        subject: Ansible Report
+        body: System deployed successfully
+      delegate_to: localhost
+
+    - name: Install Docker container
+      docker_container:
+        name: nginx
+        image: nginx:latest
+        state: started
+        ports:
+          - "80:80"
+
+    - name: Manage MySQL database
+      mysql_db:
+        name: myapp
+        state: present
+        login_user: root
+        login_password: "{{ mysql_password }}"
+
+    - name: Create MySQL user
+      mysql_user:
+        name: appuser
+        password: "{{ app_password }}"
+        priv: 'myapp.*:ALL'
+        state: present
+        login_user: root
+        login_password: "{{ mysql_password }}"
+
+    - name: Copy files to remote host
+      synchronize:
+        src: /local/path/
+        dest: /remote/path/
+        recursive: yes
+
+    - name: Configure network interface (IOS)
+      ios_config:
+        lines:
+          - description Configured by Ansible
+          - ip address 192.168.1.1 255.255.255.0
+        parents: interface GigabitEthernet0/1
+
+    - name: Manage APT repository
+      apt_repository:
+        repo: ppa:nginx/stable
+        state: present
+
+    - name: Gather AWS EC2 facts
+      ec2_instance_facts:
+        region: us-east-1
+      register: ec2_info

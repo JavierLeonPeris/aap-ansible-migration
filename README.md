@@ -50,7 +50,7 @@ The FQCN format is: `<namespace>.<collection>.<module_name>`
 
 ### Installing Collections
 
-Collections are not included by default. 
+Collections are not included by default.
 
 In Ansible Automation Platform they will be installed while syncing the projects using the requirements.yml, use the examples from this guide.
 
@@ -254,6 +254,37 @@ By default, collections are installed to:
 - `/usr/share/ansible/collections/ansible_collections/` (system-level)
 - `./collections/ansible_collections/` (project-level, if using `-p ./collections`)
 
+### Where Collections Are Installed From
+
+By default, Ansible collections are installed from Ansible Galaxy, available at https://galaxy.ansible.com.
+
+There are several Ansible collections which are also Red Hat certified, such as `amazon.aws` and `ansible.posix`, or Red Hat Validated, such as `cloud.azure_ops` and `cloud.vmware_ops`. These are all stored in Red Hat's Ansible Automation Hub repositories, available at https://console.redhat.com/ansible/automation-hub.
+
+Additionally, several Ansible collections, such as `amazon.aws` and `vmware.vmware`, exist in both Ansible Automation Hub as a Red Hat certified collection, and in Ansible Galaxy as a community maintained Ansible collection. It is recommended that Ansible developers use the Red Hat Certified and Validated Ansible collections where they are available, instead of the community maintained versions.
+
+To set up the connection to Red Hat Ansible Automation Hub and also Ansible Galaxy, follow the below steps. You can then continue installing Ansible collections as before.
+
+1. Create an API token through https://console.redhat.com/ansible/automation-hub/token. This token is used for authenticating your access to Red Hat Ansible Automation Hub when installing the Certified and Validated collections.
+2. Create an `ansible.cfg` file with the following content. The API token is passed to the authentication URL to validate the Ansible collection installation requests.
+
+```yaml
+[galaxy]
+server_list=certified,validated,community
+
+[galaxy_server.certified]
+url=https://console.redhat.com/api/automation-hub/content/published/
+auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+token=<your API token>
+
+[galaxy_server.validated]
+url=https://console.redhat.com/api/automation-hub/content/validated/
+auth_url=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+token=<your API token>
+
+[galaxy_server.community]
+url=https://galaxy.ansible.com/api/
+```
+
 ### Best Practices
 
 1. **Version pinning**: Use version constraints to ensure compatibility
@@ -317,4 +348,3 @@ ansible-doc community.general.mail
 ## Contributing
 
 Found an issue or want to add more examples? Feel free to contribute to this guide!
-
